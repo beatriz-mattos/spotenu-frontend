@@ -1,58 +1,55 @@
 import React from "react";
 import { TextField, Button } from "@material-ui/core";
-import { SubmitForm, TermsAcceptance, LogoSpotenuBlack } from "../../utils/styles";
+import { SubmitForm, LogoSpotenuBlack } from "../../utils/styles";
 import PageTitle from "../../utils/PageTitle";
 import LogoSpotenu from "../../assets/spotenu-1.png";
-import { Link } from "react-router-dom";
+import { useHistory } from 'react-router-dom';
 import { useForm } from "../../hooks/useForm";
 import api from "../../services/api";
-import { useHistory } from 'react-router-dom';
 
-export default function BandSignupPage() {
+export function AdminSignupPage() {
     const history = useHistory();
+    const token = localStorage.getItem("token");
 
     const { form, onChangeInput } = useForm({
         name: "",
         email: "",
         nickname: "",
         password: "",
-        description: "",
-        type: "BAND",
-        isApproved: 0
+        type: "ADMIN"
     });
 
     const handleInputChange = (e) => {
-        //const { name, value } = e.target;
+        const { name, value } = e.target;
 
         onChangeInput(e);
     };
 
-    const requestBandSignup = async (e) => {
+    const onSubmitadmin = async (e) => {
         e.preventDefault();
-        console.log("form", form)
-
-        try{
-            const res = await api.post("/band/signup", form)
-            .then((res) => {
-                history.push("/band/login")
+        try {
+            const response = await api.post("/user/signup/admin", form)
+            .then((response) => {
+                history.push("/user/login/admin")
             });
 
-        } catch(err){
-            window.alert('Não foi possível cadastrar a banda', err.response);
-        }
+        } catch (err) {
+            console.log("err", err.response)
+        };
+
+        history.push("/admin-page");
     };
 
     return (
         <div>
-            <SubmitForm autocomplete="on" onSubmit={requestBandSignup}>
+            <SubmitForm autocomplete="on" onSubmit={onSubmitadmin}>
                 <LogoSpotenuBlack src={LogoSpotenu} alt="Logo_sptn" />
-                <PageTitle title={"Compartilhe com o mundo, registre uma banda!"} />
-
+                <PageTitle title={"Cadastro de novo usuário administrador"} />
                 <TextField
-                    label={"Nickname"}
                     minLength={3}
                     name={"nickname"}
                     value={form["nickname"]}
+                    label={"Nickname"}
                     onChange={handleInputChange}
                     placeholder="Insira o nickname"
                     pattern="[A-Az-z]{3, }"
@@ -61,12 +58,12 @@ export default function BandSignupPage() {
                 />
 
                 <TextField
-                    label={"Nome"}
                     minLength={3}
                     name={"name"}
                     value={form["name"]}
+                    label={"Nome"}
                     onChange={handleInputChange}
-                    placeholder={"Insira o nome da banda"}
+                    placeholder={"Insira o nome"}
                     pattern="[A-Az-z]{3, }"
                     title="O nome deve conter 3 letras no mínimo"
                     required
@@ -85,14 +82,6 @@ export default function BandSignupPage() {
                 />
 
                 <TextField
-                    label={"Breve descrição"}
-                    name={"description"}
-                    value={form["description"]}
-                    onChange={handleInputChange}
-                    required
-                />
-
-                <TextField
                     name={"password"}
                     value={form["password"]}
                     label={"Senha"}
@@ -104,15 +93,10 @@ export default function BandSignupPage() {
                     required
                 />
 
-                <TermsAcceptance>
-                    <input type="radio" value="accept-terms" />
-                    <label for="accept-terms">Eu aceito os Termos e Condições e a Política de Privacidade do <strong>Spotenu</strong>.</label>
-                </TermsAcceptance>
-
-                <Button type={"submit"} variant={"contained"} color={"secondary"}>INSCREVER-SE</Button>
-
-                <p>Já cadastrou a sua banda? <Link style={{ color: "green" }} to={"/band/login"}>Faça login</Link>.</p>
+                <Button type={"submit"} variant={"contained"} color={"secondary"}> ADICIONAR ADMIN </Button>
             </SubmitForm>
         </div>
     );
 };
+
+export default AdminSignupPage;

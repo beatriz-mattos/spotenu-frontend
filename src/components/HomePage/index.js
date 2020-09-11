@@ -3,17 +3,22 @@ import React from "react";
 import Header from "../Header";
 import Footer from "../Footer";
 
-import { HomePageWrapper, Section } from "./styles";
+import { SectionBackground, Title, Subtitle } from "./styles";
 
 function HomePage () {
     return (
-        <HomePageWrapper>
+        <div>
             <Header />
             
-            <Section><p>HomePage</p></Section>
+            <SectionBackground>
+                <div>
+                    <Title>Escutar muda tudo</Title>
+                    <Subtitle>Milhões de <strong>músicas</strong> e <strong>podcasts</strong> para explorar!</Subtitle>
+                </div>
+            </SectionBackground>
     
             <Footer />
-        </HomePageWrapper>
+        </div>
     );
 };
 

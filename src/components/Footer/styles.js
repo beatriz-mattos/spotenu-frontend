@@ -23,3 +23,14 @@ export const Logo = styled.img`
   //     max-width: 105px;
   // }
 `;
+
+export const Icones = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const Img = styled.img`
+  width: 40px;
+  margin: 0 20px;
+`;

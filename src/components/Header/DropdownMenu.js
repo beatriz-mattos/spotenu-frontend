@@ -1,20 +1,10 @@
-import Reactg from 'react';
+import React from 'react';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import styled from "styled-components";
+import { Link } from "react-router-dom";
 
-const SubscribeButton = styled(Button)`
-  background-color: green;
-  height: 80px;
-`
-
-const LoginButton = styled(Button)`
-    background-color: green;
-    height: 80px;
-`
-
-export default function SimpleMenu() {
+export default function DropdownMenu() {
     const [anchorSubscribe, setAnchorSubscribe] = React.useState(null);
     const [anchorLogin, setAnchorLogin] = React.useState(null);
 
@@ -34,40 +24,40 @@ export default function SimpleMenu() {
     return (
         <div>
             <>
-                <SubscribeButton aria-controls="customized-menu" aria-haspopup="true" color="secondary" onClick={handleClickSubscribe}>
+                <Button aria-controls="customized-menu" aria-haspopup="true" color="secondary" onClick={handleClickSubscribe}>
                     INSCREVA-SE
-                </SubscribeButton>
+                </Button>
                 <Menu
-                    id="simple-menu"
+                    id="customized-menu"
                     anchorEl={anchorSubscribe}
                     keepMounted
                     open={Boolean(anchorSubscribe)}
                     onClose={handleCloseSubscribe}
                     color="primary"
                 >
-                    <MenuItem onClick={handleCloseSubscribe}>Como usuário</MenuItem>
-                    <MenuItem onClick={handleCloseSubscribe}>Como banda</MenuItem>
+                    <MenuItem onClick={handleCloseSubscribe} component={Link} to={'/user/signup'}>Como usuário</MenuItem>
+                    <MenuItem onClick={handleCloseSubscribe} component={Link} to={'/band/signup'}>Como banda</MenuItem>
                 </Menu>
             </>
 
             <>
-                <LoginButton aria-controls="customized-menu" aria-haspopup="true" color="secondary" onClick={handleClickLogin}>
+                <Button aria-controls="customized-menu" aria-haspopup="true" color="secondary" onClick={handleClickLogin}>
                     ENTRAR
-                </LoginButton>
+                </Button>
                 <Menu
-                    id="simple-menu"
+                    id="customized-menu"
                     anchorEl={anchorLogin}
                     keepMounted
                     open={Boolean(anchorLogin)}
                     onClose={handleCloseLogin}
                     color="primary"
                 >
-                    <MenuItem onClick={handleCloseLogin}>Como admin</MenuItem>
-                    <MenuItem onClick={handleCloseLogin}>Como usuário</MenuItem>
-                    <MenuItem onClick={handleCloseLogin}>Como banda</MenuItem>
+                    <MenuItem onClick={handleCloseLogin} component={Link} to={'/user/login/admin'}>Como admin</MenuItem>
+                    <MenuItem onClick={handleCloseLogin} component={Link} to={'/user/login'}>Como usuário</MenuItem>
+                    <MenuItem onClick={handleCloseLogin} component={Link} to={'/band/login'}>Como banda</MenuItem>
                 </Menu>
             </>
         </div>
 
     );
-}
+};
